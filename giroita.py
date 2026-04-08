@@ -8,12 +8,39 @@ st.set_page_config(layout="wide")
 
 @st.cache_data(ttl=5)
 def carregar():
-    cred = pygsheets.authorize(service_file= os.getcwd() + "\cred.json")
-    url = "https://docs.google.com/spreadsheets/d/1f_iTFHfn58p0AUVKP5nm4MObhF5cgkGXZQSk_vN-bqw/edit?gid=2592361#gid=2592361"
-    arquivo = cred.open_by_url(url)
-    aba = arquivo.worksheet_by_title("Base_Itapipoca")
-    df = aba.get_as_df()
-    return df
+    def carregar():
+    escopos = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+
+    info_dict = {
+        "type": st.secrets["controle"]["type"],
+        "project_id": st.secrets["controle"]["project_id"],
+        "private_key_id": st.secrets["controle"]["private_key_id"],
+        # O .replace abaixo é essencial para converter os \n de texto em quebras de linha reais
+        "private_key": st.secrets["controle"]["private_key"].replace("\\n", "\n"),
+        "client_email": st.secrets["controle"]["client_email"],
+        "client_id": st.secrets["controle"]["client_id"],
+        "auth_uri": st.secrets["controle"]["auth_uri"],
+        "token_uri": st.secrets["controle"]["token_uri"],
+        "auth_provider_x509_cert_url": st.secrets["controle"]["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": st.secrets["controle"]["client_x509_cert_url"],
+        "universe_domain": st.secrets.get("controle", {}).get("universe_domain", "googleapis.com")
+    }
+
+    creds = service_account.Credentials.from_service_account_info(info_dict, scopes=escopos)
+    client = pygsheets.client.Client(creds)
+
+    sheet_id = "1f_iTFHfn58p0AUVKP5nm4MObhF5cgkGXZQSk_vN-bqw"
+    
+    try:
+        arquivo = client.open_by_key(sheet_id)
+        aba = arquivo.worksheet_by_title("Base_Itapipoca")
+        return aba.get_as_df()
+    except Exception as e:
+        st.error(f"Erro ao acessar a planilha: {e}")
+        return None
 
 df = carregar()
 df = df.loc[:, df.columns != ''] 
