@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import pygsheets
+from google.oauth2 import service_account
 import os
 
 st.set_page_config(layout="wide")
