@@ -26,7 +26,7 @@ def carregar():
         "token_uri": st.secrets["controle"]["token_uri"],
         "auth_provider_x509_cert_url": st.secrets["controle"]["auth_provider_x509_cert_url"],
         "client_x509_cert_url": st.secrets["controle"]["client_x509_cert_url"],
-        "universe_domain": st.secrets.get("controle", {}).get("universe_domain", "googleapis.com")
+        "universe_domain": st.secrets.get("controle_ita", {}).get("universe_domain", "googleapis.com")
     }
 
     creds = service_account.Credentials.from_service_account_info(info_dict, scopes=escopos)
