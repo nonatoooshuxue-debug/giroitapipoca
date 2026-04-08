@@ -14,17 +14,17 @@ def carregar():
         ]
     
         info_dict = {
-            "type": st.secrets["controle"]["type"],
-            "project_id": st.secrets["controle"]["project_id"],
-            "private_key_id": st.secrets["controle"]["private_key_id"],
+            "type": st.secrets["controle_ita"]["type"],
+            "project_id": st.secrets["controle_ita"]["project_id"],
+            "private_key_id": st.secrets["controle_ita"]["private_key_id"],
             # O .replace abaixo é essencial para converter os \n de texto em quebras de linha reais
-            "private_key": st.secrets["controle"]["private_key"].replace("\\n", "\n"),
-            "client_email": st.secrets["controle"]["client_email"],
-            "client_id": st.secrets["controle"]["client_id"],
-            "auth_uri": st.secrets["controle"]["auth_uri"],
-            "token_uri": st.secrets["controle"]["token_uri"],
-            "auth_provider_x509_cert_url": st.secrets["controle"]["auth_provider_x509_cert_url"],
-            "client_x509_cert_url": st.secrets["controle"]["client_x509_cert_url"],
+            "private_key": st.secrets["controle_ita"]["private_key"].replace("\\n", "\n"),
+            "client_email": st.secrets["controle_ita"]["client_email"],
+            "client_id": st.secrets["controle_ita"]["client_id"],
+            "auth_uri": st.secrets["controle_ita"]["auth_uri"],
+            "token_uri": st.secrets["controle_ita"]["token_uri"],
+            "auth_provider_x509_cert_url": st.secrets["controle_ita"]["auth_provider_x509_cert_url"],
+            "client_x509_cert_url": st.secrets["controle_ita"]["client_x509_cert_url"],
             "universe_domain": st.secrets.get("controle_ita", {}).get("universe_domain", "googleapis.com")
         }
     
